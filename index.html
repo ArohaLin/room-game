@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#FFF7E6">
+  <title>回家的鑰匙 · 一棟房子的小秘密</title>
+  <link rel="stylesheet" href="css/styles.css?v=8">
+</head>
+<body>
+  <div id="app">
+    <div id="main">
+      <!-- 頂部工具列:樓層地圖 / 房間名 / 筆記 / 提示 / 重來 -->
+      <div id="topbar">
+        <button id="btn-floors" class="bar-btn floors" title="樓層地圖">🏠<small>樓層</small></button>
+        <div id="roomtitle">前院</div>
+        <div class="bar-spacer"></div>
+        <button id="btn-notebook" class="bar-btn" title="偵探筆記">🔎<small>筆記</small></button>
+        <button id="btn-hint" class="bar-btn hint" title="小幫手提示">💡<small>提示</small></button>
+        <button id="btn-restart" class="bar-btn restart" title="重新開始">↻<small>重來</small></button>
+      </div>
+
+      <!-- 主場景:#stage 為固定 5:3 比例、完整顯示不裁切;熱點為其百分比定位 -->
+      <div id="playfield">
+        <div id="stage"></div>
+        <div id="dialog"></div>
+      </div>
+
+      <!-- 底部物品列(可橫向捲動) -->
+      <div id="inventory"></div>
+    </div>
+
+    <!-- 樓層抽屜(手機滑出;桌機自動靠右常駐) -->
+    <div id="scrim"></div>
+    <div id="floornav"></div>
+
+    <!-- 彈窗(全螢幕) -->
+    <div id="modal-backdrop"></div>
+  </div>
+
+  <script src="js/data.js?v=8"></script>
+  <script src="js/art.js?v=8"></script>
+  <script src="js/scenes.js?v=8"></script>
+  <script src="js/game.js?v=8"></script>
+</body>
+</html>
