@@ -20,24 +20,28 @@
 
 ---
 
-## A 段:你(使用者)在新 Windows 機手動做
+## A 段:你(使用者)只需做最少的事(其餘交給 B 段 Claude 自動做)
 
-### A1. 安裝清單
-- **Git for Windows** — 取得程式碼必裝。
-- **Python 3**(安裝時勾 *Add python.exe to PATH*) — 本機試玩 `serve.py` 用。
-- **Node.js + npm** — *選配*,只有「要從新機重新部署到 Vercel」才需要(`npm i -g vercel`)。
-- **GitHub CLI `gh`** — 選配(用 `git` clone 即可)。
-- **Claude Code** — 若要讓目標機 Claude 自動跑 B 段。
+### A1. 你只要先準備兩樣
+1. **Claude Code**(必裝,要靠它跑 B 段自動化):<https://claude.com/claude-code>
+2. **winget**(Windows 套件管理器,B0 會用它自動裝其他工具):
+   Windows 10(1809+)/11 已內建(隨「App Installer」);若指令找不到 → Microsoft Store 搜「**App Installer**」或 <https://aka.ms/getwinget>
 
-### A2. 登入
-- Git:`git config --global user.name "你的名字"` / `git config --global user.email "你的信箱"`
-- `vercel login`(帳號 `arohalin`) — 只有要重新部署才需要。
+裝好這兩樣後,直接用下面【交接留言】把工作交給這台機的 Claude Code——它會自己裝 git、clone、跑驗收。
 
-### A3. 取得專案
-```powershell
-git clone https://github.com/ArohaLin/room-game
-cd room-game
-```
+### A2. 需要你「互動式登入」的部分(B 段會在需要時提示你)
+- `git config --global user.name "你的名字"` / `git config --global user.email "你的信箱"`
+- `gh auth login`(選配) / `vercel login`(帳號 `arohalin`,只有要從本機重新部署才需要)
+
+### A3. 工具下載總表(B0 會用 winget 自動裝;此表供人工備援)
+| 工具 | 用途 | winget 一鍵 | 官方下載 |
+|---|---|---|---|
+| **Git** | 取得程式碼(必要) | `winget install --id Git.Git -e` | <https://git-scm.com/download/win> |
+| **Python 3** | 跑 `serve.py` 本機試玩 | `winget install --id Python.Python.3.12 -e` | <https://www.python.org/downloads/windows/> |
+| Node.js LTS | 裝 Vercel CLI(選配) | `winget install --id OpenJS.NodeJS.LTS -e` | <https://nodejs.org/en/download> |
+| GitHub CLI | `gh`(選配) | `winget install --id GitHub.cli -e` | <https://cli.github.com/> |
+| Vercel CLI | 重新部署(選配) | `npm i -g vercel`(裝完 Node 後) | <https://vercel.com/docs/cli> |
+
 > 無機密包需要解壓 —— 這個專案沒有任何機密檔。
 
 ### A4. 防雙跑(切換日)
@@ -49,6 +53,18 @@ cd room-game
 ## B 段:目標機 Claude Code 自動化段
 
 > 把本檔交給新 Windows 機上的 Claude Code,請它執行本段並逐項驗收。
+
+### B0. 自動安裝工具鏈(用 winget,降低人工)
+```powershell
+winget install --id Git.Git -e --source winget
+winget install --id Python.Python.3.12 -e --source winget
+# 選配:要從本機重新部署到 Vercel 才需要
+winget install --id OpenJS.NodeJS.LTS -e --source winget
+npm i -g vercel
+```
+- 裝完**開一個新終端機**讓 PATH 生效,再驗證:`git --version`、`python --version`、(選配)`node -v`、`vercel --version`。
+- 裝不動或需要 GUI 互動的,退回請使用者用 A3 表的官方連結手動裝。
+- 接著 clone:`git clone https://github.com/ArohaLin/room-game` → `cd room-game`。
 
 ### B1. 平台適配
 - 唯一差異:本機伺服器在 Windows 用 **`python serve.py 8000`**(macOS 是 `python3`)。
